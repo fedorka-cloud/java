@@ -1,33 +1,40 @@
 
 
-
-// const correctPassword = 'javascript123'
+// const user = {
+//     name: "Alex",
+//     age: 25,
+//     city: "Berlin",
+//     isStudent: true
+// }
 //
-// function checkPassword(password) {
-//     if (password === correctPassword) {
-//         return true
+//
+// function showUserInfo(user) {
+//     if (user.isStudent === true) {
+//         user.isStudent = 'студент'
 //     } else {
-//         return false
+//         user.isStudent = 'не студент'
 //     }
+//
+//     return (`зовут ${user.name},возраст ${user.age},живёт в: ${user.city}, ${user.isStudent}`)
 // }
 //
-// let attepts = 3
-// let passwordLabel = ''
 //
-// while (checkPassword(passwordLabel) === false && attepts > 0) {
-//     passwordLabel = prompt('Please enter a password')
+// function isAdult(user) {
+//     return user.age >= 18;
+// }
 //
-//     if (correctPassword !== passwordLabel) {
-//         attepts--
-//         console.log(`Неверный пароль. Осталось попыток: ${attepts}`)
+// function changeCity(user, newCity) {
+//     user.city = newCity;
 //
-//     }
+// }
 //
-// }  if (attepts === 0 ) {
-//     console.log('вход запрещён')
-// }  else {
-//     console.log('добро пожаловать')
-// } -- задание 1
+// const requestCity = prompt('в каком городе вы живёте?')
+// changeCity(user, requestCity)
+//
+// console.log(user)
+//
+// console.log(isAdult(user))
+// console.log(showUserInfo(user)) -- задание 1
 
 
 
@@ -35,58 +42,255 @@
 
 
 
-
-
-
-// function isEven(number) {
-//     if (number % 2 === 0) {
-//         return true;
+// const product = {
+//     name: "Keyboard",
+//     price: 100,
+//     quantity: 5,
+//     discount: 10
+// }
+//
+// function getDiscountPrice(product) {
+//     return product.price - (product.price * product.discount / 100)
+// }
+//
+// function getTotalPrice(product) {
+//     return getDiscountPrice(product) * product.quantity
+// }
+//
+// function showProduct(product) {
+//     const discountPrice = getDiscountPrice(product)
+//     const totalPrice = getTotalPrice(product);
+//     const stockStatus = product.quantity
+//     let priceCategory = ''
+//
+//     if (getTotalPrice(product) > 300) {
+//         priceCategory = 'Покупка дорогая'
 //     } else {
-//         return false;
+//         priceCategory = 'нормальная цена'
 //     }
+//
+//     if (stockStatus === 0) {
+//         product.quantity = 'нет в наличии'
+//     }
+//
+//     return `
+//     товар: ${product.name}
+//     цена: ${product.price}
+//     скидка: ${product.discount}%
+//     цена со скидкой: ${discountPrice}
+//     количество: ${product.quantity}
+//     общая стоимость: ${totalPrice}
+//     ${priceCategory}
+//     `
 // }
 //
-// function getNumberType(number) {
-//     if (number > 0) {
-//         return 'положительное';
-//     } else if (number < 0) {
-//         return 'отрицательное';
+// console.log(showProduct(product)) --- задание 2
+
+
+
+
+
+// const student1 = {
+//     name: "Alex",
+//     age: 20,
+//     grade: 85
+// }
+//
+// const student2 = {
+//     name: "Maria",
+//     age: 19,
+//     grade: 95
+// }
+//
+// const student3 = {
+//     name: "John",
+//     age: 21,
+//     grade: 45
+// }
+//
+//
+// function getGradeStatus(student) {
+//     if (student.grade >= 90) {
+//         return 'Отлично'
+//     } else if (student.grade >= 70) {
+//         return 'Хорошо'
+//     } else if (student.grade >= 50) {
+//         return 'Удовлетворительно'
 //     } else {
-//         return 'ноль';
+//         return 'не сдал'
 //     }
 // }
 //
-// let positiveCount = 0;
-// let negativeCount = 0;
-// let evenCount = 0;
-// let oddCount = 0;
-//
-// let num = 1
-//
-// while (num !== 0) {
-//     num = +prompt('введите число: ')
-//
-//     if (num !== 0) {
-//         if (isEven(num)) {
-//             evenCount++;
-//         } else {
-//             oddCount++
-//         }
+// let totalSum = 0
 //
 //
-//         const type = getNumberType(num)
-//         if (type === 'положительное') {
-//             positiveCount++
-//         } else if (type === 'отрицательное') {
-//             negativeCount++
-//         }
+// for (let i = 1; i <= 3; i++) {
+//     if (i === 1) {
+//         totalSum += student1.grade;
+//     } else if (i === 2) {
+//         totalSum += student2.grade;
+//     } else if (i === 3) {
+//         totalSum += student3.grade;
 //     }
 // }
 //
-// console.log(`Положительных: ${positiveCount}`);
-// console.log(`Отрицательных: ${negativeCount}`);
-// console.log(`Чётных: ${evenCount}`);
-// console.log(`Нечётных: ${oddCount}`); -- задание 2
+// let averageGrade = totalSum / 3
+//
+// const result = {
+//     grade: averageGrade
+// }
+//
+// console.log(getGradeStatus(result)) -- задание 3
+
+
+
+
+// const product1 = {
+//     name: "Laptop",
+//     price: 1000,
+//     quantity: 3
+// }
+//
+// const product2 = {
+//     name: "Mouse",
+//     price: 25,
+//     quantity: 0
+// }
+//
+// const product3 = {
+//     name: "Monitor",
+//     price: 300,
+//     quantity: 5
+// }
+//
+//
+// function restockProduct(product, quantity) {
+//     product.quantity += quantity
+// }
+//
+// function sellProduct(product, quantity) {
+//     if (product.quantity >= quantity) {
+//         product.quantity -= quantity
+//     } else {
+//         console.log('нет в наличии')
+//     }
+// }
+//
+// let totalCost = (product1.quantity * product1.price) +
+//     (product2.quantity * product2.price) +
+//     (product3.quantity * product3.price)
+//
+// console.log(totalCost) --- задание 4
+
+
+
+
+
+const client = {
+    name: "Alex",
+    balance: 2000,
+    creditLimit: 500,
+    debt: 0,
+    isBlocked: false
+}
+
+function showAccount(client) {
+    alert(client)
+}
+
+
+function deposit(client, amount) {
+    if (client.isBlocked === true) {
+        console.log("Операция невозможна")
+        return
+    }
+
+    client.balance += amount;
+}
+
+
+function withdraw(client, amount) {
+    if (client.isBlocked === true) {
+        console.log("Операция невозможна")
+        return
+    }
+
+     client.balance -= amount
+}
+
+function takeCredit(client, amount) {
+    if (client.isBlocked === true) {
+        console.log("Операция невозможна")
+        return
+    }
+
+    if (client.creditLimit >= amount) {
+        client.creditLimit -= amount
+        client.balance += amount
+        client.debt += amount
+    } else {
+        console.log('error')
+    }
+}
+
+
+function repayCredit(client, amount) {
+    if (client.isBlocked === true) {
+        console.log("Операция невозможна")
+        return
+    }
+
+    if (client.balance >= amount && client.debt >= amount) {
+        client.creditLimit += amount
+        client.balance -= amount
+        client.debt -= amount
+    } else {
+        console.log('error')
+    }
+}
+
+
+
+function showMenu() {
+    const showMenu = +prompt('Меню:\n'+
+        '1 — Проверить баланс\n'+
+        '2 — Пополнить счёт\n' +
+        '3 — Снять деньги\n' +
+        '4 — Взять кредит\n' +
+        '5 — Погасить кредит\n' +
+        '6 — Заблокировать счёт\n' +
+        '0 — Выйти\n')
+}
+
+while (showMenu !== 0 && client.isBlocked !== true) {
+    switch (showMenu) {
+        case 1: {
+            showAccount(client)
+            break
+        }
+
+        case 2: {
+            deposit(client)
+            break
+        }
+
+        case 3: {
+            withdraw(client)
+            break
+        }
+
+        case 4: {
+            takeCredit(client)
+            break
+        }
+
+        case 5: {
+            repayCredit(client)
+            break
+        }
+    }
+
+}
 
 
 
