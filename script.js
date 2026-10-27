@@ -252,7 +252,7 @@ function repayCredit(client, amount) {
 
 
 function showMenu() {
-    const showMenu = +prompt('Меню:\n'+
+    const menu = +prompt('Меню:\n'+
         '1 — Проверить баланс\n'+
         '2 — Пополнить счёт\n' +
         '3 — Снять деньги\n' +
@@ -260,36 +260,46 @@ function showMenu() {
         '5 — Погасить кредит\n' +
         '6 — Заблокировать счёт\n' +
         '0 — Выйти\n')
+
+    return menu
 }
 
-while (showMenu !== 0 && client.isBlocked !== true) {
-    switch (showMenu) {
+let userCoice = showMenu()
+
+
+
+while (userCoice !== 0 && client.isBlocked !== true) {
+    switch (userCoice) {
         case 1: {
             showAccount(client)
             break
         }
 
         case 2: {
-            deposit(client)
+            let amount = +prompt('введите сумму для пополнения: ')
+            deposit(client, amount)
             break
         }
 
         case 3: {
-            withdraw(client)
+            let amount = +prompt('введите сумму для снятия: ')
+            withdraw(client, amount)
             break
         }
 
         case 4: {
-            takeCredit(client)
+            let amount = +prompt('введите сумму для кредита: ')
+            takeCredit(client, amount)
             break
         }
 
         case 5: {
-            repayCredit(client)
+            let amount = +prompt('введите сумму для возврата кредита:')
+            repayCredit(client, amount)
             break
         }
     }
-
+    userCoice = showMenu()
 }
 
 
