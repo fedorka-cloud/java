@@ -195,7 +195,7 @@ const client = {
 }
 
 function showAccount(client) {
-    alert(client)
+    alert(JSON.stringify(client))
 }
 
 
@@ -214,6 +214,7 @@ function withdraw(client, amount) {
         console.log("Операция невозможна")
         return
     }
+
 
      client.balance -= amount
 }
@@ -268,7 +269,7 @@ let userCoice = showMenu()
 
 
 
-while (userCoice !== 0 && client.isBlocked !== true) {
+while (userCoice !== 0) {
     switch (userCoice) {
         case 1: {
             showAccount(client)
@@ -298,6 +299,14 @@ while (userCoice !== 0 && client.isBlocked !== true) {
             repayCredit(client, amount)
             break
         }
+        case 6: {
+            client.isBlocked = true
+            break
+        }
+        default: {
+            alert('error')
+        }
+
     }
     userCoice = showMenu()
 }
