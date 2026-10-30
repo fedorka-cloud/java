@@ -9,13 +9,9 @@
 //
 //
 // function showUserInfo(user) {
-//     if (user.isStudent === true) {
-//         user.isStudent = 'студент'
-//     } else {
-//         user.isStudent = 'не студент'
-//     }
+//     const isStudent = user.isStudent ? 'студент' : 'не студент'
 //
-//     return (`зовут ${user.name},возраст ${user.age},живёт в: ${user.city}, ${user.isStudent}`)
+//     return (`зовут ${user.name},возраст ${user.age},живёт в: ${user.city}, ${isStudent}`)
 // }
 //
 //
@@ -34,7 +30,7 @@
 // console.log(user)
 //
 // console.log(isAdult(user))
-// console.log(showUserInfo(user)) -- задание 1
+// console.log(showUserInfo(user)) --
 
 
 
@@ -50,7 +46,7 @@
 // }
 //
 // function getDiscountPrice(product) {
-//     return product.price - (product.price * product.discount / 100)
+//     return product.price - product.discount
 // }
 //
 // function getTotalPrice(product) {
@@ -60,31 +56,22 @@
 // function showProduct(product) {
 //     const discountPrice = getDiscountPrice(product)
 //     const totalPrice = getTotalPrice(product);
-//     const stockStatus = product.quantity
-//     let priceCategory = ''
+//     const stockStatus = product.quantity === 0 ? 'нет в наличии' : product.quantity
+//     const priceCategory = getTotalPrice(product) > 300 ? 'покупка дорогая' : 'нормальная цена'
 //
-//     if (getTotalPrice(product) > 300) {
-//         priceCategory = 'Покупка дорогая'
-//     } else {
-//         priceCategory = 'нормальная цена'
-//     }
-//
-//     if (stockStatus === 0) {
-//         product.quantity = 'нет в наличии'
-//     }
 //
 //     return `
 //     товар: ${product.name}
 //     цена: ${product.price}
 //     скидка: ${product.discount}%
 //     цена со скидкой: ${discountPrice}
-//     количество: ${product.quantity}
+//     количество: ${stockStatus}
 //     общая стоимость: ${totalPrice}
 //     ${priceCategory}
 //     `
 // }
 //
-// console.log(showProduct(product)) --- задание 2
+// console.log(showProduct(product))
 
 
 
@@ -93,7 +80,7 @@
 // const student1 = {
 //     name: "Alex",
 //     age: 20,
-//     grade: 85
+//     grade: 51
 // }
 //
 // const student2 = {
@@ -134,13 +121,10 @@
 //     }
 // }
 //
-// let averageGrade = totalSum / 3
 //
-// const result = {
-//     grade: averageGrade
-// }
 //
-// console.log(getGradeStatus(result)) -- задание 3
+//
+// console.log(getGradeStatus(student1))
 
 
 
@@ -180,7 +164,7 @@
 //     (product2.quantity * product2.price) +
 //     (product3.quantity * product3.price)
 //
-// console.log(totalCost) --- задание 4
+// console.log(totalCost)
 
 
 
@@ -195,7 +179,23 @@ const client = {
 }
 
 function showAccount(client) {
-    alert(JSON.stringify(client))
+    if (client.isBlocked === true) {
+        alert(`
+            Имя: не доступно
+            Баланс:  не доступно
+            Кредитный лимит: не доступно
+            Долг: не доступно
+            Заблокирован: да
+    `)
+    } else {
+        alert(`
+            Имя: ${ client.name }
+            Баланс: ${ client.balance }
+            Кредитный лимит: ${ client.creditLimit }
+            Долг: ${ client.debt }
+            Заблокирован: нет`
+        )
+    }
 }
 
 
@@ -203,6 +203,11 @@ function deposit(client, amount) {
     if (client.isBlocked === true) {
         console.log("Операция невозможна")
         return
+    }
+
+    if (amount < 0) {
+        alert('неккоректное число')
+        return;
     }
 
     client.balance += amount;
@@ -215,8 +220,27 @@ function withdraw(client, amount) {
         return
     }
 
+    if (amount < 0 || isNaN(amount)) {
+        alert('неккоректные данные')
+        return;
+    }
 
-     client.balance -= amount
+    if (amount > client.balance + client.creditLimit) {
+        alert("недостаточно средств");
+        return;
+    }
+
+    if (amount > client.balance) {
+        let getCredit = amount - client.balance
+        client.balance = 0
+        client.creditLimit -= getCredit
+        client.debt += getCredit
+    } else {
+        client.balance -= amount
+    }
+
+
+
 }
 
 function takeCredit(client, amount) {
@@ -225,12 +249,18 @@ function takeCredit(client, amount) {
         return
     }
 
+
+    if (amount < 0) {
+        alert('неккоректное число')
+        return;
+    }
+
     if (client.creditLimit >= amount) {
         client.creditLimit -= amount
         client.balance += amount
         client.debt += amount
     } else {
-        console.log('error')
+        alert('error')
     }
 }
 
@@ -239,6 +269,11 @@ function repayCredit(client, amount) {
     if (client.isBlocked === true) {
         console.log("Операция невозможна")
         return
+    }
+
+    if (amount < 0) {
+        alert('неккоректное число')
+        return;
     }
 
     if (client.balance >= amount && client.debt >= amount) {
@@ -253,7 +288,8 @@ function repayCredit(client, amount) {
 
 
 function showMenu() {
-    const menu = +prompt('Меню:\n'+
+
+    let menu = +prompt('Меню:\n'+
         '1 — Проверить баланс\n'+
         '2 — Пополнить счёт\n' +
         '3 — Снять деньги\n' +
@@ -262,7 +298,15 @@ function showMenu() {
         '6 — Заблокировать счёт\n' +
         '0 — Выйти\n')
 
-    return menu
+    if (menu >= 0 && menu < 7) {
+        return menu
+
+    } else {
+        alert('error')
+    }
+
+
+
 }
 
 let userCoice = showMenu()
@@ -277,34 +321,47 @@ while (userCoice !== 0) {
         }
 
         case 2: {
-            let amount = +prompt('введите сумму для пополнения: ')
-            deposit(client, amount)
+            if (client.isBlocked === true) {
+                alert('ваша картка заблокирована,вы не можете пользоваться финансовыми операциями')
+            } else {
+                let amount = +prompt('введите сумму для пополнения: ')
+                deposit(client, amount)
+            }
             break
         }
 
         case 3: {
-            let amount = +prompt('введите сумму для снятия: ')
-            withdraw(client, amount)
+            if (client.isBlocked === true) {
+                alert('ваша картка заблокирована,вы не можете пользоваться финансовыми операциями')
+            } else {
+                let amount = +prompt('введите сумму для снятия: ')
+                withdraw(client, amount)
+            }
             break
         }
 
         case 4: {
-            let amount = +prompt('введите сумму для кредита: ')
-            takeCredit(client, amount)
+            if (client.isBlocked === true) {
+                alert('ваша картка заблокирована,вы не можете пользоваться финансовыми операциями')
+            } else {
+                let amount = +prompt('введите сумму для кредита: ')
+                takeCredit(client, amount)
+            }
             break
         }
 
         case 5: {
-            let amount = +prompt('введите сумму для возврата кредита:')
-            repayCredit(client, amount)
+            if (client.isBlocked === true) {
+                alert('ваша картка заблокирована,вы не можете пользоваться финансовыми операциями')
+            } else {
+                let amount = +prompt('введите сумму для возврата кредита:')
+                repayCredit(client, amount)
+            }
             break
         }
         case 6: {
             client.isBlocked = true
             break
-        }
-        default: {
-            alert('error')
         }
 
     }
